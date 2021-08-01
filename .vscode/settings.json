@@ -1,0 +1,16 @@
+{
+  // 避免编辑器配置与Lint规则冲突
+  "javascript.validate.enable": false,
+  "editor.tabSize": 2,
+
+  // *.js/*.ts文件，保存时自动纠错
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "typescript",
+      "autoFix": true
+    }
+  ]
+}
