@@ -1,5 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
-const token = "";
+import {createForm} from './utils'
+const token = "1917863854:AAH-HkOjh58cddWz_kuvoWqXF3wStlv2SzQ";
 const bot = new TelegramBot(token, {
   polling: true,
   // @ts-ignore
@@ -8,12 +9,41 @@ const bot = new TelegramBot(token, {
   },
 });
 
+bot.onText(/\/start/,(msg) => {
+  bot.sendMessage(msg.chat?.id as number,`选择业务`,{
+    parse_mode:'HTML',
+    reply_markup:{
+      inline_keyboard:[
+        [
+          {
+            text:'充值',
+            callback_data:'pay'
+          },
+          {
+            text:'转账',
+            callback_data:'trans'
+          },
+          {
+            text:'提现',
+            callback_data:'takeOut'
+          },
+          {
+            text:'发红包',
+            callback_data:'redPack'
+          }
+        ]
+      ]
+    }
+  })
+})
+
 bot.on(
   "callback_query",
   async (msg) => {
+   
     if(msg.data === 'pay'){
       
-      bot.sendMessage(msg.message?.chat.id as number,'充值',{
+       bot.sendMessage(msg.message?.chat.id as number,'充值',{
         reply_markup:{
           inline_keyboard:[
             [
@@ -28,6 +58,18 @@ bot.on(
             ]
           ]
         }
+      })
+    }
+    if(msg.data === 'CNY_pay'){
+      createForm(msg.message?.chat.id as number,{
+        count:{
+          question:'请输入充值金额'
+        },
+        number:{
+          question:'请输入转账数量'
+        }
+      },bot).then((res) => {
+        console.log(res)
       })
     }
     // bot.editMessageReplyMarkup(
@@ -87,44 +129,37 @@ bot.on(
   }
 );
 
+
 bot.on("message", async (msg) => {
-  console.log(msg);
-  const chatInfo = await bot.getChat(msg.chat.id)
-  console.log(chatInfo)
-  bot.sendMessage(msg.chat.id,`<b>bold</b>, <strong>bold</strong>
-  <i>italic</i>, <em>italic</em>
-  <u>underline</u>, <ins>underline</ins>
-  <s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
-  <b>bold <i>italic bold <s>italic bold strikethrough</s> <u>underline italic bold</u></i> bold</b>
-  <a href="http://www.example.com/">inline URL</a>
-  <a href="tg://user?id=123456789">inline mention of a user</a>
-  <code>inline fixed-width code</code>
-  <pre>pre-formatted fixed-width code block</pre>
-  <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>`,{
-    parse_mode:'HTML',
-    reply_markup:{
-      inline_keyboard:[
-        [
-          {
-            text:'充值',
-            callback_data:'pay'
-          },
-          {
-            text:'转账',
-            callback_data:'trans'
-          },
-          {
-            text:'提现',
-            callback_data:'takeOut'
-          },
-          {
-            text:'发红包',
-            callback_data:'redPack'
-          }
-        ]
-      ]
-    }
-  })
+   console.log('收到信息',msg);
+  // const chatInfo = await bot.getChat(msg.chat.id)
+  // console.log(chatInfo)
+  // const a = bot.sendMessage(msg.chat.id,`选择业务`,{
+  //   parse_mode:'HTML',
+  //   reply_markup:{
+  //     inline_keyboard:[
+  //       [
+  //         {
+  //           text:'充值',
+  //           callback_data:'pay'
+  //         },
+  //         {
+  //           text:'转账',
+  //           callback_data:'trans'
+  //         },
+  //         {
+  //           text:'提现',
+  //           callback_data:'takeOut'
+  //         },
+  //         {
+  //           text:'发红包',
+  //           callback_data:'redPack'
+  //         }
+  //       ]
+  //     ]
+  //   }
+  // })
+  // console.log('a',a.then((res) => {console.log(res)}))
   // bot.sendMessage(msg.chat.id,msg?.text as string,{
   //   reply_to_message_id:msg.message_id
   // })
