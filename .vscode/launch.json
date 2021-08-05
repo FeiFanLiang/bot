@@ -13,6 +13,18 @@
       "args": [
         "${workspaceFolder}/src/index.ts"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "bot测试",
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${workspaceFolder}/src/tes.ts"
+      ]
     }
   ]
 }
