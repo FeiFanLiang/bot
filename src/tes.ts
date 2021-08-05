@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { Composer, Context, Markup, Scenes, session, Telegraf } from 'telegraf'
+//@ts-ignore
 import { SocksProxyAgent } from 'socks-proxy-agent';
 
 const token = '1917863854:AAH-HkOjh58cddWz_kuvoWqXF3wStlv2SzQ'
