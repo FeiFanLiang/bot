@@ -9,7 +9,7 @@ import './commands'
 bot.telegram.setMyCommands([
   {
     command: "start",
-    description: "开始",
+    description: "TG云支付 · 一键换汇",
   },
   {
     command: "alipay",
@@ -60,6 +60,9 @@ bot.telegram.setMyCommands([
 bot.use((ctx,next) => {
   console.log(ctx)
   return next()
+})
+bot.catch((error) => {
+  console.log(error)
 })
 
 bot.launch();
