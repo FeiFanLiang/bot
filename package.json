@@ -20,7 +20,7 @@
     "typescript": "^3.5.1"
   },
   "scripts": {
-    "start": "pm2 start ./build/src/index.js --env production",
+    "start": "NODE_ENV=production pm2 start ./build/src/index.js --env production",
     "build": "tsc",
     "test": "_mocha src/**/*.test.{js,jsx,ts,tsx}",
     "cov": "nyc npm run test",
