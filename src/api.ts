@@ -139,3 +139,11 @@ export const getRedPackApi = (data:any):any => {
     data
   })
 }
+
+export const checkIsSelfPackApi = (data:any):any => {
+  return service({
+    url:'/api/checkIsSelfPack',
+    method:'post',
+    data
+  })
+}

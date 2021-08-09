@@ -64,5 +64,5 @@ bot.use((ctx,next) => {
 bot.catch((error) => {
   console.log(error)
 })
-
+console.log('bot已启动',process.env.NODE_ENV)
 bot.launch();

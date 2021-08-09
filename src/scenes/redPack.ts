@@ -3,16 +3,49 @@ import { MyContext } from "../type";
 import { validateAmount } from "../utils";
 import {createRedPackApi} from '../api'
 
+
 const redPackStageHandler = new Composer<MyContext>();
 redPackStageHandler.action("/cancel", async (ctx) => {
   ctx.reply('红包取消创建')
   return ctx.scene.leave()
 });
 
+redPackStageHandler.action('/confirm',async (ctx) => {
+  const url ='https://telegra.ph/file/58b2550c7a12120ab1c5b.jpg'
+  const state:redPackState = ctx.scene.state;
+  //@ts-ignore
+  const userName = ctx.chat.username || ''
+  const redPackUid = await createRedPackApi({
+    userId:ctx.from?.id,
+    username:userName,
+    amount:state.amount,
+    number:state.number
+  })
+  if(!redPackUid){
+    await ctx.reply('创建红包失败，您的余额不足')
+  }else {
+    await ctx.replyWithPhoto(
+      url,
+      {
+        reply_markup: Markup.inlineKeyboard([
+          Markup.button.url(
+            "抢红包",
+            `https://t.me/Long_pay_bot?start=${redPackUid}`
+          ),
+        ]).reply_markup,
+        caption:'点击领取您的好友创建的红包'
+      },
+    );
+  }
+  return ctx.scene.leave()
+})
+
 interface redPackState {
   amount?:number
   number?:number
 }
+
+
 
 export const redPack = new Scenes.WizardScene<MyContext>(
   "redPack",
@@ -20,7 +53,6 @@ export const redPack = new Scenes.WizardScene<MyContext>(
     await ctx.reply("请输入红包金额");
     return ctx.wizard.next();
   },
-  redPackStageHandler,
   async (ctx) => {
     //@ts-ignore
     if(!validateAmount(ctx.message.text)){
@@ -34,15 +66,7 @@ export const redPack = new Scenes.WizardScene<MyContext>(
       }
       //@ts-ignore
       (ctx.scene.state as redPackState).amount = Number(ctx.message.text)
-      await ctx.reply("请输入红包个数",{
-        reply_markup:{
-          inline_keyboard:[
-            [
-              {text:'取消',callback_data:'/cancel'}
-            ]
-          ]
-        }
-      });
+      await ctx.reply("请输入红包个数");
       return ctx.wizard.next();
     }
   },
@@ -56,37 +80,25 @@ export const redPack = new Scenes.WizardScene<MyContext>(
           await ctx.reply('单个红包最小金额不能低于1元,请重新输入红包个数')
           return ctx.wizard.selectStep(2)
         }
-        const url ='https://telegra.ph/file/58b2550c7a12120ab1c5b.jpg'
-        //@ts-ignore
-        const userName = ctx.chat.username || ''
-        const redPackUid = await createRedPackApi({
-          userId:ctx.from?.id,
-          username:userName,
-          amount:state.amount,
-          number:Number(text)
+        state.number = Number(text)
+        ctx.reply(`红包信息\n红包总金额：${state.amount}\n红包总个数：${state.number}`,{
+          reply_markup:{
+            inline_keyboard:[
+              [
+                {text:'确认',callback_data:'/confirm'},
+                {text:'取消',callback_data:'/cancel'}
+              ]
+            ]
+          }
         })
-        if(!redPackUid){
-          await ctx.reply('创建红包失败，您的余额不足')
-        }else {
-          await ctx.replyWithPhoto(
-            url,
-            {
-              reply_markup: Markup.inlineKeyboard([
-                Markup.button.url(
-                  "抢红包",
-                  `https://t.me/Long_pay_bot?start=${redPackUid}`
-                ),
-              ]).reply_markup,
-              caption:'点击领取您的好友创建的红包'
-            },
-          );
-        }
-        return ctx.scene.leave()
+        return ctx.wizard.next()
         
       } else {
-        await ctx.reply("金额输入错误");
+        await ctx.reply("红包数量输入有误");
         return ctx.wizard.selectStep(2);
       }
     }
-  }
+    return ctx.scene.leave()
+  },
+  redPackStageHandler
 );

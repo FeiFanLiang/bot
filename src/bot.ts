@@ -5,7 +5,7 @@ const token = "1917863854:AAH-HkOjh58cddWz_kuvoWqXF3wStlv2SzQ";
 
 const bot = new Telegraf<MyContext>(token, {
   telegram: {
-    agent: new SocksProxyAgent("socks://127.0.0.1:7890"),
+    agent: process.env.NODE_ENV === 'production' ? undefined : new SocksProxyAgent("socks://127.0.0.1:7890"),
   },
 });
 

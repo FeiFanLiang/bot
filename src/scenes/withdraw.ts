@@ -31,7 +31,7 @@ export const withdrawAlipay = new Scenes.WizardScene<MyContext>(
         },
       });
     }else {
-      await ctx.reply('请先添加提现账号')
+      await ctx.reply('👆您还没有添加提现账号,请先添加提现账号后再进行提现操作')
       return ctx.scene.leave()
     }
    
@@ -109,7 +109,7 @@ export const withdrawUsdt = new Scenes.WizardScene<MyContext>(
         },
       });
     }else {
-      await ctx.reply('请先添加提现地址')
+      await ctx.reply('👆您还没有添加提现地址,请先添加提现地址后再进行提现操作')
       return ctx.scene.leave()
     }
    

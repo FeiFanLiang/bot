@@ -25,14 +25,18 @@ export const rechargeAlipay = new Scenes.WizardScene<MyContext>(
     if (ctx.message && "text" in ctx.message) {
       if (!validateAmount(ctx.message.text)) {
         await ctx.reply("金额输入有误,请重新输入")
-        return ctx.wizard.selectStep(0);
+        return ctx.wizard.selectStep(1);
       } else {
+        if(Number(ctx.message.text) < 100){
+          await ctx.reply('人民币充值的最小金额为100元,请重新输入')
+          return ctx.wizard.selectStep(1)
+        }
         const state:rechargeState = ctx.scene.state
         state.amount = ctx.message.text
         state.time = dayjs().format('YYYY/MM/DD HH:mm:ss')
         const res = await getAlipayAddressApi()
         //@ts-ignore
-        const address = res.address
+        const address = res?.address
         await ctx.reply(`您正在使用支付宝进行充值：
 
 充值用户：${ctx.from?.id}
@@ -103,11 +107,11 @@ export const rechargeUsdt = new Scenes.WizardScene<MyContext>(
     if (ctx.message && "text" in ctx.message) {
       if (!validateAmount(ctx.message.text)) {
         await ctx.reply("金额输入有误,请重新输入")
-        return ctx.wizard.selectStep(0);
+        return ctx.wizard.selectStep(1);
       } else {
-        if(Number(ctx.message.text) < 1){
-          await ctx.reply('充值金额最小为1,请重新输入')
-          return ctx.wizard.selectStep(0);
+        if(Number(ctx.message.text) < 15){
+          await ctx.reply('充值金额最小为15USDT,请重新输入')
+          return ctx.wizard.selectStep(1);
         }
         const state:rechargeState = ctx.scene.state
         state.amount = ctx.message.text

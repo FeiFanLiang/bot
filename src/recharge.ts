@@ -2,7 +2,7 @@ import {MyContext} from './type'
 import {Markup} from 'telegraf'
 import bot from './bot'
 //@ts-ignore
-import {getTemplateApi,getAlipayAddressApi,getUserAccountApi,checkUserUsdtApi,checkUsdtRechargeApi} from './api'
+import {getTemplateApi,getUserAccountApi,checkUserUsdtApi,checkUsdtRechargeApi} from './api'
 import dayjs from 'dayjs'
 
 export const confirmAlipayHandler = (ctx:MyContext) => {
