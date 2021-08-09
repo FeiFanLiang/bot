@@ -8,7 +8,7 @@
     /* 严格的类型检查选项 */
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
-
+    "skipLibCheck":true,
     /* 附加的检查 */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
