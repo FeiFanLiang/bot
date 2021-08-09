@@ -60,7 +60,7 @@ export const withdrawAlipay = new Scenes.WizardScene<MyContext>(
         await ctx.reply('您的提现请求已提交审核，审核完毕后bot推送给您审核结果')
         //提现相关逻辑
         bot.telegram.sendMessage(
-          -476279416,
+          -1001592957188,
           `💳 提现申请：
           ${user.userId}
          用户：[${user.accountName}](https://t.me/${user.accountName})
@@ -138,7 +138,7 @@ export const withdrawUsdt = new Scenes.WizardScene<MyContext>(
         await ctx.reply('您的提现请求已提交审核，审核完毕后bot推送给您审核结果')
         //提现相关逻辑
         bot.telegram.sendMessage(
-          -476279416,
+          -1001592957188,
           `💳 提现申请：
           ${user.userId}
          用户：[${user.accountName}](https://t.me/${user.accountName})

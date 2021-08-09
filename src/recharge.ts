@@ -6,7 +6,7 @@ import {getTemplateApi,getUserAccountApi,checkUserUsdtApi,checkUsdtRechargeApi} 
 import dayjs from 'dayjs'
 
 export const confirmAlipayHandler = (ctx:MyContext) => {
-  bot.telegram.sendMessage(-476279416, `💳 用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：人民币\n申请时间：${dayjs().format('YYYY/MM/DD HH:mm:ss')}`
+  bot.telegram.sendMessage(-1001592957188, `💳 用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：人民币\n申请时间：${dayjs().format('YYYY/MM/DD HH:mm:ss')}`
 , {
     reply_markup: {
       inline_keyboard: [
@@ -34,15 +34,15 @@ export const confirmUsdtHandler = async (ctx:MyContext) => {
     }).then((res:number) => {
       if(res){
         ctx.telegram.sendMessage((ctx.from?.id) as number,`您的USDT充值${res}已到账`)
-        bot.telegram.sendMessage(-476279416, `💳 查询到用户充值到账\n用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：USDT\n金额：${res}\n申请时间：${time}\n请确认到账金额是否正确`);
+        bot.telegram.sendMessage(-1001592957188, `💳 查询到用户充值到账\n用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：USDT\n金额：${res}\n申请时间：${time}\n请确认到账金额是否正确`);
       }else {
         ctx.telegram.sendMessage((ctx.from?.id) as number,`您的USDT充值${res}未查询到账`)
-        bot.telegram.sendMessage(-476279416, `💳 未查询到用户充值到账\n用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：USDT\n金额：${res}\n申请时间：${time}\n请人工核查`);
+        bot.telegram.sendMessage(-1001592957188, `💳 未查询到用户充值到账\n用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：USDT\n金额：${res}\n申请时间：${time}\n请人工核查`);
       }
     })
   }, 30000);
   ctx.editMessageText('请等待确认到账')
-  bot.telegram.sendMessage(-476279416, `💳 用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：USDT\n申请时间：${time}\nUSDT到账方式为自动到账`);
+  bot.telegram.sendMessage(-1001592957188, `💳 用户充值:\nID：${ctx.from?.id}\n用户：${ctx.from?.first_name}${ctx.from?.last_name}\n充值币种：USDT\n申请时间：${time}\nUSDT到账方式为自动到账`);
 }
 
 export const alipayAddressHandler = (ctx:MyContext) => {

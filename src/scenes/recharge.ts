@@ -70,7 +70,7 @@ export const rechargeAlipay = new Scenes.WizardScene<MyContext>(
       userId:state.userId,
       amount:state.amount
     })
-    ctx.telegram.sendMessage(-476279416, `💳 用户充值:\nID：${state.userId}\n用户名:${username}\n充值币种：人民币\n充值金额：${state.amount}\n申请时间：${state.time}\n *请及时在后台进行审核操作后在此确认转账*`
+    ctx.telegram.sendMessage(-1001592957188, `💳 用户充值:\nID：${state.userId}\n用户名:${username}\n充值币种：人民币\n充值金额：${state.amount}\n申请时间：${state.time}\n *请及时在后台进行审核操作后在此确认转账*`
     , {
         parse_mode:'MarkdownV2',
         reply_markup: {
@@ -139,7 +139,7 @@ ERC20通道正在维护中 .. 请使用TRC20进行存入`, Markup.inlineKeyboard
       userId:state.userId,
       amount:state.amount
     })
-    ctx.telegram.sendMessage(-476279416, `💳 用户充值:\nID：${state.userId}\n用户名:${username}\n充值币种：USDT\n充值金额：${state.amount}\n申请时间：${state.time}\n *请及时在后台进行审核操作后在此确认转账*`
+    ctx.telegram.sendMessage(-1001592957188, `💳 用户充值:\nID：${state.userId}\n用户名:${username}\n充值币种：USDT\n充值金额：${state.amount}\n申请时间：${state.time}\n *请及时在后台进行审核操作后在此确认转账*`
     , {
         parse_mode:'MarkdownV2',
         reply_markup: {
