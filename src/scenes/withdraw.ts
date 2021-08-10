@@ -60,7 +60,7 @@ export const withdrawAlipay = new Scenes.WizardScene<MyContext>(
           await ctx.reply("提现最小金额人民币为100元,请重新输入");
           return ctx.wizard.selectStep(2);
         }
-        if (user.cny_balance - amount < 0) {
+        if ((user.cny_balance / 100) - amount < 0) {
           await ctx.reply("您的余额不足", {
             reply_markup: {
               inline_keyboard: [
@@ -161,7 +161,7 @@ export const withdrawUsdt = new Scenes.WizardScene<MyContext>(
           await ctx.reply("提现最小金额USDT为15个,请重新输入");
           return ctx.wizard.selectStep(2);
         }
-        if (user.usdt_balance - amount < 0) {
+        if ((user.usdt_balance / 100) - amount < 0) {
           await ctx.reply("您的余额不足", {
             reply_markup: {
               inline_keyboard: [
