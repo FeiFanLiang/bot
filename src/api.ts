@@ -34,7 +34,7 @@ service.interceptors.response.use(
 
 interface checkUserData {
   accountName:string
-  userId:string | number
+  userId:string
 }
 
 export const checkUserApi = (data:checkUserData) => {
@@ -143,6 +143,14 @@ export const getRedPackApi = (data:any):any => {
 export const checkIsSelfPackApi = (data:any):any => {
   return service({
     url:'/api/checkIsSelfPack',
+    method:'post',
+    data
+  })
+}
+
+export const getUserAmountApi = (data:any):any => {
+  return service({
+    url:"/api/getUserAmount",
     method:'post',
     data
   })

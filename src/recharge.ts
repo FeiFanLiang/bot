@@ -30,7 +30,7 @@ export const confirmUsdtHandler = async (ctx:MyContext) => {
   const time = dayjs().format('YYYY/MM/DD HH:mm:ss')
   setTimeout(async () => {
     checkUsdtRechargeApi({
-      userId:ctx.from?.id
+      userId:ctx.from?.id.toString()
     }).then((res:number) => {
       if(res){
         ctx.telegram.sendMessage((ctx.from?.id) as number,`您的USDT充值${res}已到账`)

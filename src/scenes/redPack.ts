@@ -1,7 +1,7 @@
 import { Scenes, Markup, Composer } from "telegraf";
 import { MyContext } from "../type";
 import { validateAmount } from "../utils";
-import {createRedPackApi} from '../api'
+import {createRedPackApi,getUserAmountApi} from '../api'
 
 
 const redPackStageHandler = new Composer<MyContext>();
@@ -16,7 +16,7 @@ redPackStageHandler.action('/confirm',async (ctx) => {
   //@ts-ignore
   const userName = ctx.chat.username || ''
   const redPackUid = await createRedPackApi({
-    userId:ctx.from?.id,
+    userId:ctx.from?.id.toString(),
     username:userName,
     amount:state.amount,
     number:state.number
@@ -80,6 +80,18 @@ export const redPack = new Scenes.WizardScene<MyContext>(
           await ctx.reply('单个红包最小金额不能低于1元,请重新输入红包个数')
           return ctx.wizard.selectStep(2)
         }
+        const amount = getUserAmountApi({
+          userId:ctx.from?.id.toString()
+        })
+        if(amount.cny_balance - Number(state.amount) < 0){
+          await ctx.reply(`您的账户余额不足，请充值后再继续操作!`,{
+            reply_markup:Markup.inlineKeyboard([
+              Markup.button.callback('个人中心','/my')
+            ]).reply_markup
+          })
+          return ctx.scene.leave()
+        }
+
         state.number = Number(text)
         ctx.reply(`红包信息\n红包总金额：${state.amount}\n红包总个数：${state.number}`,{
           reply_markup:{

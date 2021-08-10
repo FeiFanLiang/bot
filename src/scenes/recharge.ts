@@ -22,7 +22,7 @@ export const rechargeAlipay = new Scenes.WizardScene<MyContext>(
 
     👇 在下面的输入框中输入金额并发送`);
     const state:rechargeState = ctx.scene.state
-    state.userId = ctx.from?.id
+    state.userId = ctx.from?.id.toString()
     return ctx.wizard.next();
   },
   async (ctx) => {
@@ -154,7 +154,7 @@ export const rechargeUsdt = new Scenes.WizardScene<MyContext>(
     //@ts-ignore
     const type = ctx.callbackQuery.data === '/trc20' ? 'trc20' : 'erc20'
 
-    state.userId = ctx.from?.id
+    state.userId = ctx.from?.id.toString()
     state.usdtType = type;
     return ctx.wizard.next();
   },

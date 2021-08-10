@@ -21,7 +21,7 @@ import { formatterAmount } from "./utils";
 import dayjs from "dayjs";
 
 bot.command("start", async (ctx) => {
-  const userId = ctx.message.from.id;
+  const userId = ctx.message.from.id.toString()
   //@ts-ignore
   const userName = ctx.chat.username || "";
   const data = {
@@ -34,19 +34,20 @@ bot.command("start", async (ctx) => {
   const user: any = await getUserAccountApi({
     userId,
   });
-
   ctx.reply(
-    `  <b>➖➖➖  用户中心  ➖➖➖</b>
-     
-    <b>人民币：</b><code>${formatterAmount(user.cny_balance)} 元（CNY）</code>
-    <b>虚拟币：</b><code>${formatterAmount(
+    `➖➖➖  用户中心  ➖➖➖
+  
+    <b>用户账号：</b>tyusdt
+    <b>我的 ID：</b> 1643888252 
+        
+    <b>人民币：</b><code>${formatterAmount(user.cny_balance)} （CNY）</code>
+    <b>泰达币：</b><code>${formatterAmount(
       user.usdt_balance
-    )} 枚（USDT）</code> 
-    <b>我的 ID：</b><code> ${user.userId}</code> 
-    <b>用户账号：</b><code>${user.accountName}</code>
-    
-    <b>➖➖➖➖➖➖➖➖➖</b>
-    <i>🗣提示：使用户名就可以转账给好友哦 ~</i>`,
+    )} （USDT） </code>
+    <b>美金：</b><code>0.00 （Usd）</code> 
+    <b>比索：</b><code>0.00 （PHP） </code>
+     
+      <b>➖➖➖➖➖➖➖➖➖</b>`,
     {
       parse_mode: "HTML",
       reply_markup: {
@@ -308,7 +309,7 @@ bot.action(/\/getPack:\S+/, async (ctx) => {
   if (redPackUid) {
     const res = await getRedPackApi({
       id: redPackUid,
-      userId: ctx.from?.id,
+      userId: ctx.from?.id.toString(),
     });
     await ctx.editMessageReplyMarkup(undefined);
     if (res) {
